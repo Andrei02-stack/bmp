@@ -1,0 +1,73 @@
+Pentru inceput am definit niste constante pe care sa le pot folosi in codul meu.
+Am creat o structura de date pentru a respecta cerinta de a nu folosi variabile globale,
+apoi doua functii auxiliare, simple, pentru aflarea minimului si maximului a doua numere.
+
+* Task 1 *
+
+> functia save - are ca parametri imaginea si calea acesteia;
+               - se face deschiderea din fisier;
+               - scrierea headere-lor asa cum a fost recomandat, folosind fwrite;
+               - scrierea matricei de pixeli in ordine inversa.
+
+> functia load - are ca parametri imaginea si calea acesteia, asemeni functiei save;
+               - se deschide fisierul si se citesc headerele;
+               - se face seek la image data;
+               - se citeste imaginea, i se aloca memorie ,apoi se da skip la padding;
+               - se inchide fisierul.
+
+> functia unload - are ca parametru imaginea;
+                 - are rolul de a elibera memoria ocupata de imagine.
+
+
+* Task 2 *
+
+> functia insert - are ca parametri imaginea, calea si y, x - coordonatele unde se va introduce noua imagine;
+                 - se incarca imaginea noua folosind functia load;
+                 - se copiaza imaginea pana se termina sau pana nu mai incape in imaginea curenta;
+                 - se elibereaza memoria ocupata.
+
+
+* Task 3 *
+
+> functia putPixel - are ca parametri imaginea, codul culorilor R, G, B, coordonatele x si y si latimea;
+                   - pune un pixel inconjurat de un patrat cu latura width pixeli;
+                   - se observa ca distanta de la centru pana la latura = (lungimea laturii - 1) / 2 pixeli
+                   si calculam astfel coltul acelui patrat si apoi punem peste tot culoarea aleasa
+                   (in ordinea bgr, deoarece asa e formatul la bmp).
+
+> functia drawLine - are aceeasi parametri ,cu exceptia ca avem 4 coordonate x1, x2, y1, y2 in loc de 2;
+                   - am implementat algoritmul din conditie;
+                   - intai aflu x minim, maxim si tot asa pentru y pentru a afla daca se merge 
+                   pe Ox sau pe Oy si apoi am rezolvat ec de gr 1 pentru x sau y respectiv.
+
+> functia drawRectangle - are ca parametri imaginea, coordonatele x1 si y1, latimea si inaltimea si codul culorilor;
+                        - se deseneaza 4 linii in continuu; se aduna latimea si inaltimea la nevoie
+                        pentru a gasi urmatorul punct si setam x si y ca destinatia trecuta;
+                        - la inceput se traseaza o latura de la (x, y) pana la (x + w, y), apoi de la 
+                        (x + w, y) la (x + w, y - w) si tot asa (w si h fiind width si height respectiv).
+
+> functia drawTriangle - are ca parametri 6 coordonate, 3 * x si 3 * y , codul culorilor si latimea;
+                       - se foloseste din nou drawLine pentru a desena cele 3 linii ,doar ca de data aceasta
+                       nu se calculeaza nimic deoarece avem coordonatele pentru toate cele 3 varfuri.
+
+
+* Task 4 *
+
+> functiile fillHelper si fill - am folosit algoritmul recursiv DFS (Depth First Search) pentru a colora centrul 
+                               si toti vecinii sai de aceeasi culoare in mod recursiv;
+                               - visited tine cont de pixelii deja vizitati;
+                               - in fill se seteaza datele pentru a incepe algoritmul DFS, 
+                               iar fillHelper deja il implementeaza: coloreaza pixelul daca este valid 
+                               (intre 0 si width) si daca nu a fost vizitat, 
+                               apoi ii seteaza flagul vizitat si porneste acelasi 
+                               algoritm pentru vecinii sai.
+
+
+* main() *
+
+    - am setat culorile de scriere, marimea unei linii si impartirea pe comenzi si argumente.
+
+
+P.S. : Imi pare rau pentru schimbarea tipului variabilelor in majoritatea apelurilor din main, stiu ca arata 
+foarte ciudat, in apararea mea aveam erori de checkstyle si n-am vrut sa imi mai modific in toate functiile din
+implementare ca sa le citeasca checker-ul din prima fara warning-uri. 
